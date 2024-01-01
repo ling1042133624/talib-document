@@ -61,8 +61,15 @@ Learn more about the Hilbert Transform - Instantaneous Trendline at [tadoc.org](
 名称： 考夫曼的自适应移动平均线  
 简介：短期均线贴近价格走势，灵敏度高，但会有很多噪声，产生虚假信号；长期均线在判断趋势上一般比较准确
 ，但是长期均线有着严重滞后的问题。我们想得到这样的均线，当价格沿一个方向快速移动时，短期的移动
-平均线是最合适的；当价格在横盘的过程中，长期移动平均线是合适的。  
+平均线是最合适的；当价格在横盘的过程中，长期移动平均线是合适的。
+> 
+
+[参考1 -llq add](https://zhuanlan.zhihu.com/p/615114552) 
+
+[参考2 -llq add](https://mp.weixin.qq.com/s?__biz=MzIxNzUyNTI4MA==&mid=2247484057&idx=1&sn=26a70a55b9191d178b1c15fdd2561bf9&chksm=97f93fd6a08eb6c04c2a129efe866664a52c63be66854fc886e455df4be726baa42fd387098c&scene=21#wechat_redirect) 
+
 [参考1](http://blog.sina.com.cn/s/blog_62d0bbc701010p7d.html) 
+
 [参考2](https://wenku.baidu.com/view/bc4bc9c59ec3d5bbfd0a7454.html?from=search)
 
 NOTE: The ``KAMA`` function has an unstable period.  
