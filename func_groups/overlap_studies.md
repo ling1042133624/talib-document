@@ -45,7 +45,7 @@ Learn more about the Exponential Moving Average at [tadoc.org](http://www.tadoc.
 ### HT_TRENDLINE - Hilbert Transform - Instantaneous Trendline
 NOTE: The ``HT_TRENDLINE`` function has an unstable period.  
 
-> 函数名：HT_TRENDLINE   
+> 函数名：HT_TRENDLINE   here 到这里
 名称： 希尔伯特瞬时变换  
 简介：是一种趋向类指标，其构造原理是仍然对价格收盘价进行算术平均，并根据计算结果来进行分析，用于判断价格未来走势的变动趋势。  
 [百度文库](https://wenku.baidu.com/view/0e35f6eead51f01dc281f18e.html) 
