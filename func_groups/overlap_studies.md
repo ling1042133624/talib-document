@@ -226,7 +226,7 @@ Learn more about the MESA Adaptive Moving Average at [tadoc.org](http://www.tado
 real = MAVP(close, periods, minperiod=2, maxperiod=30, matype=0)
 ```
 
-### MIDPOINT - MidPoint over period
+### MIDPOINT - MidPoint over period （Here 到这里）
 ```python
 real = MIDPOINT(close, timeperiod=14)
 ```

@@ -1,4 +1,6 @@
 import time
+
+import numpy as np
 import talib
 import datetime
 
@@ -55,30 +57,17 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.boll = bt.indicators.BollingerBands(period=100, devfactor=2)
         self.dema = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=self.params.sma_period)
         self.ema = bt.indicators.ExponentialMovingAverage(self.data.close, period=self.params.sma_period)
-        # 计算 talib HT_TRENDLINE
+        # 计算 talib 指标
         self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
+        self.kama = bt.talib.KAMA(self.data, timeperiod=self.params.sma_period)
+        self.ma = bt.talib.MA(self.data, timeperiod=self.params.sma_period)
+        self.mama = bt.talib.MAMA(self.data)
 
+        self.real = bt.talib.MIDPOINT(self.data, timeperiod=self.params.sma_period)
 
-        # self.sma = bt.indicators.SimpleMovingAverage(self.data.close, period=self.params.sma_period)
-
-
-
-        # # self.dema_5 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=5)
-        # # self.dema_10 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=10)
-        # # self.dema_20 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=20)
-        # # self.dema_30 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=30)
-        #
-        # # self.dema_40 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=40)
-        # self.dema_60 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=60)
-        # # self.dema_80 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=80)
-        # self.dema_100 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=100)
-        #
-        # # self.dema_120 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=120)
-        # self.dema_240 = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=240)
-        #
-        # # self.tema = bt.indicators.TripleExponentialMovingAverage(self.data.close, period=PERIOD)
-        # # self.ema = bt.indicators.ExponentialMovingAverage(self.data.close, period=240)
-        # # self.symbol = self.dema > self.dema_240
+        # # 计算 MAVP
+        # periods = np.random.randint(10, 50, size=100)
+        # self.mavp = bt.talib.MAVP(self.data, periods, minperiod=10, maxperiod=50, matype=0)
 
 
 
