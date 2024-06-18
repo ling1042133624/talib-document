@@ -1,4 +1,4 @@
-# Momentum Indicator Functions （Here 到这里）
+# Momentum Indicator Functions 
 ### ADX - Average Directional Movement Index
 > 函数名：ADX  
 名称：平均趋向指数  
@@ -13,6 +13,7 @@
 所谓真实波幅（TR）是以最高价，最低价，及前一日收盘价三个价格做比较，求出当日股价波动的最大幅度。   
 三、趋势方向需经由一段时间来观察，研判上才有意义。一般以14天为指标的观察周期：   
 先计算出 +DM、–DM及TR的14日算术平均数，得到 +DM14、–DM14及TR14三组数据作为起始值，再计算各自的移动平均值（EMA）。   
+
 ```
     +DI14 = +DM/TR14*100
     -DI14 = +DM/TR14*100
@@ -51,7 +52,7 @@ real = ADXR(high, low, close, timeperiod=14)
 ```
 
 Learn more about the Average Directional Movement Index Rating at [tadoc.org](http://www.tadoc.org/indicator/ADXR.htm).  
-### APO - Absolute Price Oscillator
+### APO - Absolute Price Oscillator  （Here 到这里）
 ```python
 real = APO(close, fastperiod=12, slowperiod=26, matype=0)
 ```
