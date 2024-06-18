@@ -1,4 +1,4 @@
-# Momentum Indicator Functions
+# Momentum Indicator Functions （Here 到这里）
 ### ADX - Average Directional Movement Index
 > 函数名：ADX  
 名称：平均趋向指数  
