@@ -53,50 +53,38 @@ SYMBOL = "sma"
 class FortyDaySMAStrategy(bt.Strategy):
     params = (('sma_period', PERIOD),
               ('atr_period', ATR_PERIOD),
+              ('di_period', 22)
               )
 
     def __init__(self):
-        self.boll = bt.indicators.BollingerBands(period=100, devfactor=2)
+        # backtrader的indicators 计算ADX, PLUS_DI, MINUS_DI
+        # self.adx = bt.indicators.AverageDirectionalMovementIndex(
+        #     self.data, period=self.params.period)
+        # self.plus_di = bt.indicators.PlusDI(
+        #     self.data, period=self.params.period)
+        # self.minus_di = bt.indicators.MinusDI(
+        #     self.data, period=self.params.period)
+        # self.minus_di.plotinfo.plotmaster = self.plus_di
 
-        self.dema = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=self.params.sma_period)
-        self.ema = bt.indicators.ExponentialMovingAverage(self.data.close, period=self.params.sma_period)
+        # self.boll = bt.indicators.BollingerBands(period=100, devfactor=2)
+
         # 计算 talib 指标
-        self.sma = bt.talib.SMA(self.data, timeperiod=self.params.sma_period)
-        self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
-        self.kama = bt.talib.KAMA(self.data, timeperiod=self.params.sma_period)
-        self.ma = bt.talib.MA(self.data, timeperiod=self.params.sma_period)
-        self.mama = bt.talib.MAMA(self.data)
+        # self.sma = bt.talib.SMA(self.data, timeperiod=self.params.sma_period)
+        # self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
 
-        self.midpoint = bt.talib.MIDPOINT(self.data, timeperiod=self.params.sma_period)
-        self.midprice = bt.talib.MIDPRICE(self.data.high, self.data.low, timeperiod=self.params.sma_period)
-
-        self.sar = bt.talib.SAR(self.data.high, self.data.low, acceleration=0.02, maximum=0.2)
-
-        # 计算 SAREXT
-        self.sarext = bt.talib.SAREXT(self.data.high, self.data.low,
-                                      startvalue=0.0,
-                                      offsetonreverse=0.0,
-                                      accelerationinitlong=0.02,
-                                      accelerationlong=0.02,
-                                      accelerationmaxlong=0.2,
-                                      accelerationinitshort=0.02,
-                                      accelerationshort=0.02,
-                                      accelerationmaxshort=0.2)
-
-        # 计算 T3
-        self.t3 = bt.talib.T3(self.data, timeperiod=self.params.sma_period, vfactor=0.7)
-        # 计算 TEMA
-        self.tema = bt.talib.TEMA(self.data, timeperiod=self.params.sma_period)
-        # 计算 TRIMA
-        self.trima = bt.talib.TRIMA(self.data, timeperiod=self.params.sma_period)
-        # 计算 WMA
-        self.wma = bt.talib.WMA(self.data, timeperiod=self.params.sma_period)
+        #########################################################################################################
+        # 对纳指有效
+        self.adx = bt.talib.ADX(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
+        self.adxr = bt.talib.ADXR(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
+        self.adxr.plotinfo.plotmaster = self.adx
+        # ADXR(high, low, close, timeperiod=14)
+        # 计算 +DI 和 -DI
+        self.plus_di = bt.talib.PLUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
+        self.minus_di = bt.talib.MINUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
+        self.minus_di.plotinfo.plotmaster = self.plus_di
 
 
-        # # 计算 MAVP
-        # periods = np.random.randint(10, 50, size=100)
-        # self.mavp = bt.talib.MAVP(self.data, periods, minperiod=10, maxperiod=50, matype=0)
-
+        # talib.ADX()
     def next(self):
         pass
 
