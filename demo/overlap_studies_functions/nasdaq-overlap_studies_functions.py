@@ -45,8 +45,10 @@ import backtrader as bt
 import pandas as pd
 
 ATR_PERIOD = 10
-PERIOD = 5*20
+PERIOD = 5 * 20
 SYMBOL = "sma"
+
+
 # 创建策略
 class FortyDaySMAStrategy(bt.Strategy):
     params = (('sma_period', PERIOD),
@@ -55,24 +57,49 @@ class FortyDaySMAStrategy(bt.Strategy):
 
     def __init__(self):
         self.boll = bt.indicators.BollingerBands(period=100, devfactor=2)
+
         self.dema = bt.indicators.DoubleExponentialMovingAverage(self.data.close, period=self.params.sma_period)
         self.ema = bt.indicators.ExponentialMovingAverage(self.data.close, period=self.params.sma_period)
         # 计算 talib 指标
+        self.sma = bt.talib.SMA(self.data, timeperiod=self.params.sma_period)
         self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
         self.kama = bt.talib.KAMA(self.data, timeperiod=self.params.sma_period)
         self.ma = bt.talib.MA(self.data, timeperiod=self.params.sma_period)
         self.mama = bt.talib.MAMA(self.data)
 
-        self.real = bt.talib.MIDPOINT(self.data, timeperiod=self.params.sma_period)
+        self.midpoint = bt.talib.MIDPOINT(self.data, timeperiod=self.params.sma_period)
+        self.midprice = bt.talib.MIDPRICE(self.data.high, self.data.low, timeperiod=self.params.sma_period)
+
+        self.sar = bt.talib.SAR(self.data.high, self.data.low, acceleration=0.02, maximum=0.2)
+
+        # 计算 SAREXT
+        self.sarext = bt.talib.SAREXT(self.data.high, self.data.low,
+                                      startvalue=0.0,
+                                      offsetonreverse=0.0,
+                                      accelerationinitlong=0.02,
+                                      accelerationlong=0.02,
+                                      accelerationmaxlong=0.2,
+                                      accelerationinitshort=0.02,
+                                      accelerationshort=0.02,
+                                      accelerationmaxshort=0.2)
+
+        # 计算 T3
+        self.t3 = bt.talib.T3(self.data, timeperiod=self.params.sma_period, vfactor=0.7)
+        # 计算 TEMA
+        self.tema = bt.talib.TEMA(self.data, timeperiod=self.params.sma_period)
+        # 计算 TRIMA
+        self.trima = bt.talib.TRIMA(self.data, timeperiod=self.params.sma_period)
+        # 计算 WMA
+        self.wma = bt.talib.WMA(self.data, timeperiod=self.params.sma_period)
+
 
         # # 计算 MAVP
         # periods = np.random.randint(10, 50, size=100)
         # self.mavp = bt.talib.MAVP(self.data, periods, minperiod=10, maxperiod=50, matype=0)
 
-
-
     def next(self):
         pass
+
 
 # 初始化Cerebro引擎
 cerebro = bt.Cerebro()
@@ -132,9 +159,8 @@ print(strat.analyzers._DrawDown.get_analysis())
 from btplotting import BacktraderPlotting
 from btplotting.schemes import Tradimo
 
-
 # 格式化日期为"%Y-%m-%d"
 date_str = datetime.datetime.now().strftime("%Y-%m-%d %H_%M_%S")
 output_path = f"plot/result_{date_str}--PERIOD-{PERIOD}--{SYMBOL}.html"
 p = BacktraderPlotting(style='line', plot_mode='single', scheme=Tradimo(), filename=output_path, output_mode='save')
-cerebro.plot(p,)
+cerebro.plot(p, )
