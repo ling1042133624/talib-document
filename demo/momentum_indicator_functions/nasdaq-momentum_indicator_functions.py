@@ -73,6 +73,10 @@ class FortyDaySMAStrategy(bt.Strategy):
         # self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
 
         #########################################################################################################
+
+        # 计算 BOP
+        self.bop = bt.talib.BOP(self.data.open, self.data.high, self.data.low, self.data.close)
+
         # 对纳指有效
         self.adx = bt.talib.ADX(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
         self.adxr = bt.talib.ADXR(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
@@ -82,6 +86,17 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.plus_di = bt.talib.PLUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
         self.minus_di = bt.talib.MINUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
         self.minus_di.plotinfo.plotmaster = self.plus_di
+
+
+        # 计算 APO
+        self.apo = bt.talib.APO(self.data, fastperiod=20, slowperiod=100, matype=3)
+
+
+        # 计算 AROON Up 和 AROON Down
+        self.aroon = bt.talib.AROON(self.data.high, self.data.low,timeperiod=self.params.sma_period)
+        self.aroonosc = bt.talib.AROONOSC(self.data.high, self.data.low,timeperiod=self.params.sma_period)
+        self.aroonosc.plotinfo.plotmaster = self.aroon
+
 
 
         # talib.ADX()
@@ -104,7 +119,7 @@ data = bt.feeds.PandasData(dataname=all_data)
 
 # 添加数据到Cerebro
 cerebro.adddata(data)
-cerebro.addobserver(bt.observers.Benchmark, data=data)
+# cerebro.addobserver(bt.observers.Benchmark, data=data)
 
 cerebro.broker = bt.brokers.BackBroker(coc=True)
 # 设置初始资本
