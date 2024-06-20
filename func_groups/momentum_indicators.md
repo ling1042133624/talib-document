@@ -1,5 +1,5 @@
 # Momentum Indicator Functions 
-### ADX - Average Directional Movement Index
+### ADX - Average Directional Movement Index（对纳指有效）
 > 函数名：ADX  
 名称：平均趋向指数  
 简介：使用ADX指标，指标判断盘整、振荡和单边趋势。
@@ -98,7 +98,7 @@ real = BOP(open, high, low, close)
 ```
 
 Learn more about the Balance Of Power at [tadoc.org](http://www.tadoc.org/indicator/BOP.htm).  
-### CCI - Commodity Channel Index （Here 到这里）
+### CCI - Commodity Channel Index 
 > 函数名：CCI  
 名称：顺势指标  
 简介：CCI指标专门测量股价是否已超出常态分布范围
@@ -117,7 +117,7 @@ real = CCI(high, low, close, timeperiod=14)
 ```
 
 Learn more about the Commodity Channel Index at [tadoc.org](http://www.tadoc.org/indicator/CCI.htm).  
-### CMO - Chande Momentum Oscillator 钱德动量摆动指标
+### CMO - Chande Momentum Oscillator 钱德动量摆动指标  （对纳指有效）
 
 > 函数名：CMO  
 名称：钱德动量摆动指标  
@@ -141,7 +141,7 @@ real = CMO(close, timeperiod=14)
 ```
 
 Learn more about the Chande Momentum Oscillator at [tadoc.org](http://www.tadoc.org/indicator/CMO.htm).
-### DX - Directional Movement Index DMI指标又叫动向指标或趋向指标
+### DX - Directional Movement Index DMI指标又叫动向指标或趋向指标（对纳指有效）
 
 > 函数名：DX  
 名称：动向指标或趋向指标  
@@ -156,7 +156,7 @@ real = DX(high, low, close, timeperiod=14)
 ```
 
 Learn more about the Directional Movement Index at [tadoc.org](http://www.tadoc.org/indicator/DX.htm).  
-### MACD - Moving Average Convergence/Divergence
+### MACD - Moving Average Convergence/Divergence（对纳指 买点较有效）
 > 函数名：MACD  
 名称：平滑异同移动平均线  
 简介：利用收盘价的短期（常用为12日）指数移动平均线与长期（常用为26日）指数移动平均线之间的聚合与分离状况，对买进、卖出时机作出研判的技术指标。  
@@ -189,7 +189,7 @@ dif, dem, histogram = MACDEXT(close, fastperiod=12, fastmatype=0, slowperiod=26,
 dif, dem, histogram = MACDFIX(close, signalperiod=9)
 ```
 
-### MFI - Money Flow Index 资金流量指标
+### MFI - Money Flow Index 资金流量指标（Here 到这里）
 
 > 函数名：MFI  
 名称：资金流量指标    

@@ -57,50 +57,87 @@ class FortyDaySMAStrategy(bt.Strategy):
               )
 
     def __init__(self):
-        # backtrader的indicators 计算ADX, PLUS_DI, MINUS_DI
-        # self.adx = bt.indicators.AverageDirectionalMovementIndex(
-        #     self.data, period=self.params.period)
-        # self.plus_di = bt.indicators.PlusDI(
-        #     self.data, period=self.params.period)
-        # self.minus_di = bt.indicators.MinusDI(
-        #     self.data, period=self.params.period)
-        # self.minus_di.plotinfo.plotmaster = self.plus_di
 
-        # self.boll = bt.indicators.BollingerBands(period=100, devfactor=2)
+        scale_factor = 2
+        self.MACDEXT = bt.talib.MACDEXT(self.data.close,
+                                        fastperiod=12*scale_factor, fastmatype=3,
+                                        slowperiod=26*scale_factor, slowmatype=0,
+                                        signalperiod=9*scale_factor, signalmatype=0)
 
-        # 计算 talib 指标
-        # self.sma = bt.talib.SMA(self.data, timeperiod=self.params.sma_period)
-        # self.ht_trendline = bt.talib.HT_TRENDLINE(self.data, timeperiod=self.params.sma_period)
+        self.buy_index = None
+        self.sell_index = None
 
-        #########################################################################################################
 
-        # 计算 BOP
-        self.bop = bt.talib.BOP(self.data.open, self.data.high, self.data.low, self.data.close)
+        # self.indicators()
 
+    def indicators(self):
         # 对纳指有效
         self.adx = bt.talib.ADX(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
         self.adxr = bt.talib.ADXR(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
         self.adxr.plotinfo.plotmaster = self.adx
         # ADXR(high, low, close, timeperiod=14)
         # 计算 +DI 和 -DI
-        self.plus_di = bt.talib.PLUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
-        self.minus_di = bt.talib.MINUS_DI(self.data.high, self.data.low, self.data.close, timeperiod=self.params.di_period)
+        self.plus_di = bt.talib.PLUS_DI(self.data.high, self.data.low, self.data.close,
+                                        timeperiod=self.params.di_period)
+        self.minus_di = bt.talib.MINUS_DI(self.data.high, self.data.low, self.data.close,
+                                          timeperiod=self.params.di_period)
         self.minus_di.plotinfo.plotmaster = self.plus_di
-
 
         # 计算 APO
         self.apo = bt.talib.APO(self.data, fastperiod=20, slowperiod=100, matype=3)
 
-
         # 计算 AROON Up 和 AROON Down
-        self.aroon = bt.talib.AROON(self.data.high, self.data.low,timeperiod=self.params.sma_period)
-        self.aroonosc = bt.talib.AROONOSC(self.data.high, self.data.low,timeperiod=self.params.sma_period)
+        self.aroon = bt.talib.AROON(self.data.high, self.data.low, timeperiod=self.params.sma_period)
+        self.aroonosc = bt.talib.AROONOSC(self.data.high, self.data.low, timeperiod=self.params.sma_period)
         self.aroonosc.plotinfo.plotmaster = self.aroon
 
+        # 计算 BOP
+        self.bop = bt.talib.BOP(self.data.open, self.data.high, self.data.low, self.data.close)
 
+        # self.buy_index = None
+        # self.sell_index = None
+        self.cci = bt.talib.CCI(self.data.high, self.data.low, self.data.close, timeperiod=PERIOD)
+        self.buy_index = self.cci >= 100
+        self.sell_index = self.cci <= -100
+        self.position_percent = 0
+        # 对纳指有效
+        # 计算 CMO
+        self.cmo = bt.talib.CMO(self.data, timeperiod=PERIOD)
 
+        # 对纳指有效
+        self.DX = bt.talib.DX(self.data.high, self.data.low, self.data.close, timeperiod=PERIOD)
+        self.DXR = bt.talib.EMA(self.DX, timeperiod=66)
+        self.plus_di = bt.talib.PLUS_DI(self.data.high, self.data.low, self.data.close,
+                                        timeperiod=PERIOD)
+        self.minus_di = bt.talib.MINUS_DI(self.data.high, self.data.low, self.data.close,
+                                          timeperiod=PERIOD)
+        self.plus_di.plotinfo.plotmaster = self.DX
+        self.minus_di.plotinfo.plotmaster = self.DX
+        self.DXR.plotinfo.plotmaster = self.DX
+
+        # 对纳指  买点较有效
+        scale_factor = 1
+        self.macd = bt.talib.MACD(self.data.close, fastperiod=12*scale_factor, slowperiod=26*scale_factor, signalperiod=9*scale_factor)
+
+        # 与MACD雷同，用来做买点的选在比较有效
+        scale_factor = 2
+        self.MACDEXT = bt.talib.MACDEXT(self.data.close,
+                                        fastperiod=12*scale_factor, fastmatype=1,
+                                        slowperiod=26*scale_factor, slowmatype=0,
+                                        signalperiod=9*scale_factor, signalmatype=0)
         # talib.ADX()
+
     def next(self):
+        # if self.buy_index:
+        #     # self.buy()
+        #     self.position_percent += 0.2
+        #     self.position_percent = 1 if self.position_percent > 1 else self.position_percent
+        #     self.order = self.order_target_percent(target=self.position_percent)
+        # if self.sell_index:
+        #     # self.sell()
+        #     self.position_percent -= 0.4
+        #     self.position_percent = 0 if self.position_percent < 0 else self.position_percent
+        #     self.order = self.order_target_percent(target=self.position_percent)
         pass
 
 
