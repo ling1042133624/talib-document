@@ -52,7 +52,7 @@ real = ADXR(high, low, close, timeperiod=14)
 ```
 
 Learn more about the Average Directional Movement Index Rating at [tadoc.org](http://www.tadoc.org/indicator/ADXR.htm).  
-### APO - Absolute Price Oscillator  （Here 到这里）
+### APO - Absolute Price Oscillator  
 ```python
 real = APO(close, fastperiod=12, slowperiod=26, matype=0)
 ```
