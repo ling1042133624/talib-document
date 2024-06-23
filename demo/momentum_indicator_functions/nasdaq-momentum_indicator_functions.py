@@ -1,8 +1,8 @@
-import time
 
 import numpy as np
 import talib
 import datetime
+import backtrader as bt
 
 import yfinance as yf
 import pandas as pd
@@ -31,18 +31,13 @@ for name, ticker in indices.items():
     # data = yf.download(ticker, start="2009-01-01", end="2024-12-31", interval="1d", )
     data = yf.download(ticker, start="2009-01-01", end="2024-12-31", interval="1d", )
 
-    # data['Index'] = name
     all_data = pd.concat([all_data, data])
 
-# 将数据保存为CSV文件
-# all_data.to_csv("indices_data.csv")
 
 print("Data fetching complete!")
-# all_data
 
 
-import backtrader as bt
-import pandas as pd
+
 
 ATR_PERIOD = 10
 PERIOD = 5 * 20
@@ -59,14 +54,11 @@ class FortyDaySMAStrategy(bt.Strategy):
     def __init__(self):
 
         scale_factor = 2
-        self.MACDEXT = bt.talib.MACDEXT(self.data.close,
-                                        fastperiod=12*scale_factor, fastmatype=3,
-                                        slowperiod=26*scale_factor, slowmatype=0,
-                                        signalperiod=9*scale_factor, signalmatype=0)
+        # 计算 MFI 指标
+        self.mfi = bt.talib.MFI(self.data.high, self.data.low, self.data.close, self.data.volume, timeperiod=22)
 
         self.buy_index = None
         self.sell_index = None
-
 
         # self.indicators()
 
@@ -100,6 +92,7 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.buy_index = self.cci >= 100
         self.sell_index = self.cci <= -100
         self.position_percent = 0
+
         # 对纳指有效
         # 计算 CMO
         self.cmo = bt.talib.CMO(self.data, timeperiod=PERIOD)

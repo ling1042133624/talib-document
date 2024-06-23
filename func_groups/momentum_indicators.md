@@ -189,7 +189,7 @@ dif, dem, histogram = MACDEXT(close, fastperiod=12, fastmatype=0, slowperiod=26,
 dif, dem, histogram = MACDFIX(close, signalperiod=9)
 ```
 
-### MFI - Money Flow Index 资金流量指标（Here 到这里）
+### MFI - Money Flow Index 资金流量指标
 
 > 函数名：MFI  
 名称：资金流量指标    
@@ -202,7 +202,7 @@ real = MFI(high, low, close, volume, timeperiod=14)
 ```
 
 Learn more about the Money Flow Index at [tadoc.org](http://www.tadoc.org/indicator/MFI.htm).  
-### MINUS_DI - Minus Directional Indicator
+### MINUS_DI - Minus Directional Indicator（Here 到这里）
 > 函数名：DMI 中的DI指标 负方向指标    
 名称：下升动向值  
 简介：通过分析股票价格在涨跌过程中买卖双方力量均衡点的变化情况，即多空双方的力量的变化受价格波动的影响而发生由均衡到失衡的循环过程，从而提供对趋势判断依据的一种技术指标。  
