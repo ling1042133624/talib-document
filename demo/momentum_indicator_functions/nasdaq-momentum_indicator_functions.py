@@ -50,12 +50,27 @@ class FortyDaySMAStrategy(bt.Strategy):
               ('atr_period', ATR_PERIOD),
               ('di_period', 22)
               )
+    scale_factor = 2
 
     def __init__(self):
+        # 选择时间周期
+        timeperiod = 125
 
-        scale_factor = 2
-        # 计算 MFI 指标
-        self.mfi = bt.talib.MFI(self.data.high, self.data.low, self.data.close, self.data.volume, timeperiod=22)
+        # 计算ROC
+        self.ROC = bt.talib.ROC(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCP
+        self.ROCP = bt.talib.ROCP(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCR
+        self.ROCR = bt.talib.ROCR(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCR100
+        self.ROCR100 = bt.talib.ROCR100(self.data.close, timeperiod=timeperiod)
+
+        # self.ROCP.plotinfo.plotmaster = self.ROC
+        self.ROCR.plotinfo.plotmaster = self.ROCP
+        self.ROCR100.plotinfo.plotmaster = self.ROC
 
         self.buy_index = None
         self.sell_index = None
@@ -118,6 +133,42 @@ class FortyDaySMAStrategy(bt.Strategy):
                                         fastperiod=12*scale_factor, fastmatype=1,
                                         slowperiod=26*scale_factor, slowmatype=0,
                                         signalperiod=9*scale_factor, signalmatype=0)
+
+        # 计算 MFI 指标
+        self.mfi = bt.talib.MFI(self.data.high, self.data.low, self.data.close, self.data.volume, timeperiod=22)
+
+        # 对纳指无效
+        self.MOM = bt.talib.real = bt.talib.MOM(self.data.close, timeperiod=22)
+
+        # 对纳指无效
+        self.PPO = bt.talib.PPO(self.data.close, fastperiod=12, slowperiod=26, matype=0)
+        self.PPO_EMA_signal = bt.talib.EMA(self.PPO, timeperiod=9)
+        self.PPO_hist = self.PPO - self.PPO_EMA_signal
+        self.EMA.plotinfo.plotmaster = self.PPO
+
+
+        # ROC系列 用来确认买入或者处于上升周期较好用
+        # 选择时间周期
+        timeperiod = 125
+
+        # 计算ROC
+        self.ROC = bt.talib.ROC(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCP
+        self.ROCP = bt.talib.ROCP(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCR
+        self.ROCR = bt.talib.ROCR(self.data.close, timeperiod=timeperiod)
+
+        # 计算ROCR100
+        self.ROCR100 = bt.talib.ROCR100(self.data.close, timeperiod=timeperiod)
+
+        # self.ROCP.plotinfo.plotmaster = self.ROC
+        self.ROCR.plotinfo.plotmaster = self.ROCP
+        self.ROCR100.plotinfo.plotmaster = self.ROC
+
+        ##################################################################################
+
         # talib.ADX()
 
     def next(self):
