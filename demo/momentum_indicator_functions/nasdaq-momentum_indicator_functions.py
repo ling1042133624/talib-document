@@ -1,4 +1,3 @@
-
 import numpy as np
 import talib
 import datetime
@@ -33,11 +32,7 @@ for name, ticker in indices.items():
 
     all_data = pd.concat([all_data, data])
 
-
 print("Data fetching complete!")
-
-
-
 
 ATR_PERIOD = 10
 PERIOD = 5 * 20
@@ -53,27 +48,33 @@ class FortyDaySMAStrategy(bt.Strategy):
     scale_factor = 2
 
     def __init__(self):
-        # 选择时间周期
-        timeperiod = 125
+        # 对纳指的买点有效
 
-        # 计算ROC
-        self.ROC = bt.talib.ROC(self.data.close, timeperiod=timeperiod)
-
-        # 计算ROCP
-        self.ROCP = bt.talib.ROCP(self.data.close, timeperiod=timeperiod)
-
-        # 计算ROCR
-        self.ROCR = bt.talib.ROCR(self.data.close, timeperiod=timeperiod)
-
-        # 计算ROCR100
-        self.ROCR100 = bt.talib.ROCR100(self.data.close, timeperiod=timeperiod)
-
-        # self.ROCP.plotinfo.plotmaster = self.ROC
-        self.ROCR.plotinfo.plotmaster = self.ROCP
-        self.ROCR100.plotinfo.plotmaster = self.ROC
-
+        fastk_period = 14
+        slowk_period = 3
+        slowd_period = 3
+        # 计算STOCH
+        self.STOCH = bt.talib.STOCH(self.data.high, self.data.low, self.data.close,
+                                    fastk_period=9*8,
+                                    slowk_period=slowk_period*8,
+                                    slowk_matype=0,
+                                    slowd_period=slowd_period*8,
+                                    slowd_matype=0)
+        # 计算STOCHF
+        # self.STOCHF = bt.talib.STOCHF(self.data.high, self.data.low, self.data.close,
+        #                               fastk_period=fastk_period,
+        #                               fastd_period=3,
+        #                               fastd_matype=0)
+        #
+        # # 计算STOCHRSI
+        # self.STOCHRSI = bt.talib.STOCHRSI(self.data.close,
+        #                                   timeperiod=14,
+        #                                   fastk_period=14,
+        #                                   fastd_period=3,
+        #                                   fastd_matype=0)
         self.buy_index = None
         self.sell_index = None
+        self.position_percent = 0.0
 
         # self.indicators()
 
@@ -125,14 +126,15 @@ class FortyDaySMAStrategy(bt.Strategy):
 
         # 对纳指  买点较有效
         scale_factor = 1
-        self.macd = bt.talib.MACD(self.data.close, fastperiod=12*scale_factor, slowperiod=26*scale_factor, signalperiod=9*scale_factor)
+        self.macd = bt.talib.MACD(self.data.close, fastperiod=12 * scale_factor, slowperiod=26 * scale_factor,
+                                  signalperiod=9 * scale_factor)
 
         # 与MACD雷同，用来做买点的选在比较有效
         scale_factor = 2
         self.MACDEXT = bt.talib.MACDEXT(self.data.close,
-                                        fastperiod=12*scale_factor, fastmatype=1,
-                                        slowperiod=26*scale_factor, slowmatype=0,
-                                        signalperiod=9*scale_factor, signalmatype=0)
+                                        fastperiod=12 * scale_factor, fastmatype=1,
+                                        slowperiod=26 * scale_factor, slowmatype=0,
+                                        signalperiod=9 * scale_factor, signalmatype=0)
 
         # 计算 MFI 指标
         self.mfi = bt.talib.MFI(self.data.high, self.data.low, self.data.close, self.data.volume, timeperiod=22)
@@ -145,7 +147,6 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.PPO_EMA_signal = bt.talib.EMA(self.PPO, timeperiod=9)
         self.PPO_hist = self.PPO - self.PPO_EMA_signal
         self.EMA.plotinfo.plotmaster = self.PPO
-
 
         # ROC系列 用来确认买入或者处于上升周期较好用
         # 选择时间周期
@@ -168,10 +169,15 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.ROCR100.plotinfo.plotmaster = self.ROC
 
         ##################################################################################
+        # 对纳指的买点有效
+        # 计算RSI
+        self.RSI = bt.talib.real = bt.talib.RSI(self.data.close, timeperiod=66)
 
         # talib.ADX()
 
     def next(self):
+        # self.buy_index = self.RSI[0] > 43 >= self.RSI[-1]
+        # self.sell_index = self.RSI[0] < 64 <= self.RSI[-1]
         # if self.buy_index:
         #     # self.buy()
         #     self.position_percent += 0.2
