@@ -318,7 +318,7 @@ real = RSI(close, timeperiod=14)
 ```
 
 Learn more about the Relative Strength Index at [tadoc.org](http://www.tadoc.org/indicator/RSI.htm).  
-### STOCH - Stochastic 随机指标,俗称KD  （Here 到这里）
+### STOCH - Stochastic 随机指标,俗称KD  
 
 > 函数名：STOCH  
 名称：随机指标,俗称KD 
@@ -346,7 +346,7 @@ real = TRIX(close, timeperiod=30)
 ```
 
 Learn more about the 1-day Rate-Of-Change (ROC) of a Triple Smooth EMA at [tadoc.org](http://www.tadoc.org/indicator/TRIX.htm).  
-### ULTOSC - Ultimate Oscillator 终极波动指标 
+### ULTOSC - Ultimate Oscillator 终极波动指标 （Here 到这里）
 
 > 函数名：ULTOSC  
 名称：终极波动指标      
