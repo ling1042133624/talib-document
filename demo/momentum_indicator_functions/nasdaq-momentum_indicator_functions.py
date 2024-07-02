@@ -48,30 +48,12 @@ class FortyDaySMAStrategy(bt.Strategy):
     scale_factor = 2
 
     def __init__(self):
-        # 对纳指的买点有效
 
-        fastk_period = 14
-        slowk_period = 3
-        slowd_period = 3
-        # 计算STOCH
-        self.STOCH = bt.talib.STOCH(self.data.high, self.data.low, self.data.close,
-                                    fastk_period=9*8,
-                                    slowk_period=slowk_period*8,
-                                    slowk_matype=0,
-                                    slowd_period=slowd_period*8,
-                                    slowd_matype=0)
-        # 计算STOCHF
-        # self.STOCHF = bt.talib.STOCHF(self.data.high, self.data.low, self.data.close,
-        #                               fastk_period=fastk_period,
-        #                               fastd_period=3,
-        #                               fastd_matype=0)
-        #
-        # # 计算STOCHRSI
-        # self.STOCHRSI = bt.talib.STOCHRSI(self.data.close,
-        #                                   timeperiod=14,
-        #                                   fastk_period=14,
-        #                                   fastd_period=3,
-        #                                   fastd_matype=0)
+        # 获取ULTOSC指标值
+        # 计算 ULTOSC
+        self.ULTOSC = bt.talib.ULTOSC(self.data.high, self.data.low, self.data.close,
+                                         timeperiod1=7, timeperiod2=14, timeperiod3=28)
+
         self.buy_index = None
         self.sell_index = None
         self.position_percent = 0.0
@@ -172,6 +154,35 @@ class FortyDaySMAStrategy(bt.Strategy):
         # 对纳指的买点有效
         # 计算RSI
         self.RSI = bt.talib.real = bt.talib.RSI(self.data.close, timeperiod=66)
+
+        ##################################################################################
+        fastk_period = 14
+        slowk_period = 3
+        slowd_period = 3
+        # 计算STOCH
+        self.STOCH = bt.talib.STOCH(self.data.high, self.data.low, self.data.close,
+                                    fastk_period=9 * 8,
+                                    slowk_period=slowk_period * 8,
+                                    slowk_matype=0,
+                                    slowd_period=slowd_period * 8,
+                                    slowd_matype=0)
+        # 计算STOCHF
+        self.STOCHF = bt.talib.STOCHF(self.data.high, self.data.low, self.data.close,
+                                      fastk_period=fastk_period,
+                                      fastd_period=3,
+                                      fastd_matype=0)
+
+        # 计算STOCHRSI
+        self.STOCHRSI = bt.talib.STOCHRSI(self.data.close,
+                                          timeperiod=14,
+                                          fastk_period=14,
+                                          fastd_period=3,
+                                          fastd_matype=0)
+
+        ##################################################################################
+
+        # 纳指用来判断涨跌的置信区间 TRIX
+        self.TRIX = bt.talib.TRIX(self.data.close, timeperiod=22)
 
         # talib.ADX()
 
