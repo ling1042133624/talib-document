@@ -49,10 +49,11 @@ class FortyDaySMAStrategy(bt.Strategy):
 
     def __init__(self):
 
-        # 获取ULTOSC指标值
-        # 计算 ULTOSC
-        self.ULTOSC = bt.talib.ULTOSC(self.data.high, self.data.low, self.data.close,
-                                         timeperiod1=7, timeperiod2=14, timeperiod3=28)
+        # 对纳指的买入点 较为有效
+        # 计算14日威廉指标
+        self.WILLR = bt.talib.WILLR(self.data.high, self.data.low, self.data.close, timeperiod=66)
+        self.EMA = bt.talib.EMA(self.WILLR, timeperiod=10)
+        self.EMA.plotinfo.plotmaster = self.WILLR
 
         self.buy_index = None
         self.sell_index = None
@@ -183,6 +184,23 @@ class FortyDaySMAStrategy(bt.Strategy):
 
         # 纳指用来判断涨跌的置信区间 TRIX
         self.TRIX = bt.talib.TRIX(self.data.close, timeperiod=22)
+
+        ##################################################################################
+        # 获取ULTOSC指标值
+        # 对纳指 买点确认较有效
+        # timeperiod1 = 7, timeperiod2 = 14, timeperiod3 = 28
+        self.ULTOSC = bt.talib.ULTOSC(self.data.high, self.data.low, self.data.close, timeperiod1=15, timeperiod2=30, timeperiod3=60)
+        self.EMA_s = bt.talib.EMA(self.ULTOSC, timeperiod=10)
+        self.EMA_l = bt.talib.EMA(self.ULTOSC, timeperiod=20)
+        self.EMA_s.plotinfo.plotmaster = self.ULTOSC
+        self.EMA_l.plotinfo.plotmaster = self.ULTOSC
+
+        ##################################################################################
+        # 对纳指的买入点 较为有效
+        # 计算14日威廉指标
+        self.WILLR = bt.talib.WILLR(self.data.high, self.data.low, self.data.close, timeperiod=66)
+        self.EMA = bt.talib.EMA(self.WILLR, timeperiod=10)
+        self.EMA.plotinfo.plotmaster = self.WILLR
 
         # talib.ADX()
 
