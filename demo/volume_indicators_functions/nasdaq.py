@@ -9,13 +9,13 @@ import pandas as pd
 # 指数的yfinance ticker符号
 indices = {
     # "S&P 500": "^GSPC",                 ## 标普500
-    "NASDAQ Composite": "^IXIC",  ## 纳斯达克
+    # "NASDAQ Composite": "^IXIC",  ## 纳斯达克
     # "DAX": "^GDAXI",                    ## 德国DAX指数
     # "FTSE 100": "^FTSE",                ## 英国富时100指数
     # "CAC 40": "^FCHI",                  ## 法国CAC40指数
     # "Nikkei 225": "^N225",              ## 日本日经指数
     # "Nifty 50": "^NSEI",                ## 印度Nifty50指数
-    # "Shanghai Composite": "000001.SS",  ## 沪市综合指数
+    "Shanghai Composite": "000001.SS",  ## 沪市综合指数
     # "Hang Seng Index": "^HSI",          ## 香港恒生指数
     # "BSE Sensex": "^BSESN",             ## 印度孟买指数
     # "Gold Continuous Contract": "GC=F",  ## 黄金连续合约
@@ -27,8 +27,8 @@ all_data = pd.DataFrame()
 # 获取每个指数的日线数据
 for name, ticker in indices.items():
     print(f"Fetching data for {name} ({ticker})")
+    data = yf.download(ticker, start="2019-05-01", end="2024-12-31", interval="1d", )
     # data = yf.download(ticker, start="2009-01-01", end="2024-12-31", interval="1d", )
-    data = yf.download(ticker, start="2009-01-01", end="2024-12-31", interval="1d", )
 
     all_data = pd.concat([all_data, data])
 
@@ -55,6 +55,11 @@ class FortyDaySMAStrategy(bt.Strategy):
         # self.EMA = bt.talib.EMA(self.WILLR, timeperiod=10)
         # self.EMA.plotinfo.plotmaster = self.WILLR
 
+        # 对A股做空 区间识别很准
+        self.OBV = bt.talib.OBV(self.data.close, self.data.volume)
+        self.EMA = bt.talib.EMA(self.OBV, timeperiod=14)
+        self.EMA.plotinfo.plotmaster = self.OBV
+
         self.buy_index = None
         self.sell_index = None
         self.position_percent = 0.0
@@ -62,8 +67,27 @@ class FortyDaySMAStrategy(bt.Strategy):
         # self.indicators()
 
     def indicators(self):
-        pass
+        # 对于日线不好用
+        self.AD = bt.talib.AD(self.data.high, self.data.low, self.data.close, self.data.volume)
 
+        # 还行，对买卖点有识别效果 趋势-买点 和 背离-卖点
+        self.ADOSC = bt.talib.ADOSC(self.data.high, self.data.low, self.data.close, self.data.volume,
+                                    fastperiod=3, slowperiod=10)
+
+        # 对纳指买点挺有用
+        self.OBV = bt.talib.OBV(self.data.close, self.data.volume)
+        self.EMA = bt.talib.EMA(self.OBV, timeperiod=66)
+        self.EMA.plotinfo.plotmaster = self.OBV
+
+        # 对港股做空 区间识别很准
+        self.OBV = bt.talib.OBV(self.data.close, self.data.volume)
+        self.EMA = bt.talib.EMA(self.OBV, timeperiod=22)
+        self.EMA.plotinfo.plotmaster = self.OBV
+
+        # 对A股做多做空 区间识别很准
+        self.OBV = bt.talib.OBV(self.data.close, self.data.volume)
+        self.EMA = bt.talib.EMA(self.OBV, timeperiod=14)
+        self.EMA.plotinfo.plotmaster = self.OBV
 
     def next(self):
         # self.buy_index = self.RSI[0] > 43 >= self.RSI[-1]
