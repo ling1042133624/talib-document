@@ -1,6 +1,6 @@
-# Cycle Indicator Functions
+# Cycle Indicator Functions （Here 到这里 直接跳到下一章节吧，这一章有点难理解）
 > 不是很懂，欢迎指教
-### HT_DCPERIOD - Hilbert Transform - Dominant Cycle Period
+### HT_DCPERIOD - Hilbert Transform - Dominant Cycle Period  
 > 函数名：HT_DCPERIOD   
 名称： 希尔伯特变换-主导周期   
 简介：将价格作为信息信号，计算价格处在的周期的位置，作为择时的依据。   

@@ -1,5 +1,11 @@
 # Price Transform Functions
 
+
+
+### 这类指标的作用用来代替close价格的作用，因为通常的close价格并不能很好的代表bar的所有信息，用这类指标处理过的价格可以作为阶段性的信息，比单一的close价更能体现价格。
+
+
+
 ### AVGPRICE - Average Price
 > 函数名：AVGPRICE   
 名称：平均价格函数
