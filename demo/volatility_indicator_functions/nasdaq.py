@@ -27,7 +27,7 @@ all_data = pd.DataFrame()
 # 获取每个指数的日线数据
 for name, ticker in indices.items():
     print(f"Fetching data for {name} ({ticker})")
-    data = yf.download(ticker, start="2019-05-01", end="2024-12-31", interval="1d", )
+    data = yf.download(ticker, start="2020-03-01", end="2024-12-31", interval="1d", )
     # data = yf.download(ticker, start="2009-01-01", end="2024-12-31", interval="1d", )
 
     all_data = pd.concat([all_data, data])
