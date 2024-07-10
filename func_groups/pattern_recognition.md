@@ -1,5 +1,5 @@
 # Pattern Recognition Functions 形态识别
-   
+
 ### CDL2CROWS - Two Crows
 > 函数名：CDL2CROWS   
 名称：Two Crows 两只乌鸦   
@@ -25,7 +25,7 @@ integer = CDL3BLACKCROWS(open, high, low, close)
 名称： Three Inside Up/Down 三内部上涨和下跌   
 简介：三日K线模式，母子信号+长K线，以三内部上涨为例，K线为阴阳阳，
 第三天收盘价高于第一天开盘价，第二天K线在第一天K线内部，预示着股价上涨。
-   
+
 ```python
 integer = CDL3INSIDE(open, high, low, close)
 ```
@@ -35,12 +35,12 @@ integer = CDL3INSIDE(open, high, low, close)
 名称： Three-Line Strike 三线打击   
 简介：四日K线模式，前三根阳线，每日收盘价都比前一日高，
 开盘价在前一日实体内，第四日市场高开，收盘价低于第一日开盘价，预示股价下跌。
-   
+
 ```python
 integer = CDL3LINESTRIKE(open, high, low, close)
 ```
 
-### CDL3OUTSIDE - Three Outside Up/Down
+### CDL3OUTSIDE - Three Outside Up/Down  （Here 到这里）
 > 函数名：CDL3OUTSIDE  
 名称：Three Outside Up/Down 三外部上涨和下跌   
 简介：三日K线模式，与三内部上涨和下跌类似，K线为阴阳阳，但第一日与第二日的K线形态相反，
