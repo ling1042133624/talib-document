@@ -17,7 +17,7 @@ real = BETA(high, low, timeperiod=5)
 ```
 
 Learn more about the Beta at [tadoc.org](http://www.tadoc.org/indicator/BETA.htm).  
-### CORREL - Pearson's Correlation Coefficient (r)
+### CORREL - Pearson's Correlation Coefficient (r) （HERE到这里 ，刚看完）
 > 函数名：CORREL  
 名称：皮尔逊相关系数   
 简介：用于度量两个变量X和Y之间的相关（线性相关），其值介于-1与1之间  
