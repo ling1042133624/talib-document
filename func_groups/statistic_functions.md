@@ -82,7 +82,7 @@ real = STDDEV(close, timeperiod=5, nbdev=1)
 ```
 
 Learn more about the Standard Deviation at [tadoc.org](http://www.tadoc.org/indicator/STDDEV.htm).  
-### TSF - Time Series Forecast
+### TSF - Time Series Forecast（HERE到这里）
 
 > 函数名：TSF  
 名称：时间序列预测   
