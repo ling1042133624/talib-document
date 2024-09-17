@@ -59,7 +59,7 @@ class FortyDaySMAStrategy(bt.Strategy):
         self.sell_index = None
         self.position_percent = 0.0
 
-        # self.indicators()
+        self.indicators()
 
     def indicators(self):
         # 对纳指有效

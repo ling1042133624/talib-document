@@ -1,5 +1,7 @@
 # TA-Lib
+
 # 简介：
+
 Talib一直缺乏有效的中文文档，自己又有空闲时间，且在研究量化对冲系统，就发点时间，做一下翻译。
 原文地址： [TA-LIB document](https://mrjbq7.github.io/ta-lib/)
 翻译地址：
@@ -8,37 +10,35 @@ Talib一直缺乏有效的中文文档，自己又有空闲时间，且在研究
 而不是 SWIG。
 
 > TA-Lib is widely used by trading software developers requiring to perform
-> technical analysis of financial market data.  
+> technical analysis of financial market data.
 > TA-Lib广泛应用与交易软件，和金融市场数据进行技术分析。
 
 > * Includes 150+ indicators such as ADX, MACD, RSI, Stochastic, Bollinger
 >   Bands, etc.
 > * Candlestick pattern recognition
-> * Open-source API for C/C++, Java, Perl, Python and 100% Managed .NET    
+> * Open-source API for C/C++, Java, Perl, Python and 100% Managed .NET
 > * 包含了150多个指标,包括：ADX, MACD, RSI, Stochastic, Bollinger Bands, 等.
 > * K线形态识别
 > * 完全开源，支持 C/C++, Java, Perl, Python and 100% Managed .NET
-
-
 
 #### 安装TA-Lib
 
 ## 案例（快速开始）
 
 Similar to TA-Lib, the function interface provides a lightweight wrapper of
-the exposed TA-Lib indicators.  
+the exposed TA-Lib indicators.
 类似于TA-Lib，函数接口提供了一个暴露TA-Lib指标的轻量级封装。
 
 Each function returns an output array and have default values for their
 parameters, unless specified as keyword arguments. Typically, these functions
 will have an initial "lookback" period (a required number of observations
-before an output is generated) set to ``NaN``.   
+before an output is generated) set to ``NaN``.
 每个函数都默认需要输入数组，并为它们提供默认值。
 参数，除非指定为关键字参数。通常，这些函数
 会有一个初步的“lookback”时期（观测所需数量
 在生成一个输出之前），设置为“NaN”。
 
-All of the following examples use the function API:  
+All of the following examples use the function API:
 所有的API函数的使用，都需引入库文件：
 
 ```python
@@ -72,7 +72,7 @@ output = talib.MOM(close, timeperiod=5)
 
 If you're already familiar with using the function API, you should feel right
 at home using the abstract API. Every function takes the same input, passed
-as a dictionary of Numpy arrays:   
+as a dictionary of Numpy arrays:
 如果您已经熟悉使用函数API，那么您就应该精通使用抽象API。
 每个函数有相同的输入，作为一个字典通过NumPy数组：
 
@@ -87,6 +87,7 @@ inputs = {
     'volume': np.random.random(100)
 }
 ```
+
 函数可以直接导入，也可以用名称实例化：
 
 ```python
@@ -112,8 +113,8 @@ slowk, slowd = STOCH(input_arrays, 5, 3, 0, 3, 0, prices=['high', 'low', 'open']
 
 We can show all the TA functions supported by TA-Lib, either as a ``list`` or
 as a ``dict`` sorted by group (e.g. "Overlap Studies", "Momentum Indicators",
-etc):  
-我们可以显示Ta lib的所有TA函数,返回一个 ``list`` 或者 ``dict`` 
+etc):
+我们可以显示Ta lib的所有TA函数,返回一个 ``list`` 或者 ``dict``
 
 ```python
 import talib
@@ -134,7 +135,6 @@ print talib.get_function_groups()
 * [Statistic Functions 统计函数](func_groups/statistic_functions.md)
 * [Math Transform 数学变换](func_groups/math_transform.md)
 * [Math Operators 数学运算符](func_groups/math_operators.md)
-
 
 #### [Overlap Studies](func_groups/overlap_studies.md)
 
@@ -308,6 +308,6 @@ TSF                  Time Series Forecast
 VAR                  Variance
 ```
 
-我想成为一名依靠乞讨的程序员。   
+我想成为一名依靠乞讨的程序员。
 
 ![164938069.png](https://upload-images.jianshu.io/upload_images/6167081-bd931bef186e212e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
